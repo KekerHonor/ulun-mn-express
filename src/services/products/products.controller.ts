@@ -116,7 +116,7 @@ const searchProducts_byName = (req: Request, res: Response, next: NextFunction) 
 
     const { minPrice, maxPrice } = req.query;
   
-    let query = `SELECT * FROM Products WHERE price BETWEEN ${minPrice} AND ${maxPrice} `;
+    let query = `SELECT * FROM Products WHERE price BETWEEN ${minPrice} AND ${maxPrice}`;
     
   
     Connect()
