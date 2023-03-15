@@ -76,6 +76,81 @@ const createProduct = (req: Request, res: Response, next: NextFunction) => {
 } 
 
 
+const searchProducts_byName = (req: Request, res: Response, next: NextFunction) => {
+    console.log("Getting products by name...");
+  
+    let query = "SELECT * FROM Products";
+  
+    Connect()
+      .then((connection) => {
+        console.log("Connection successful")
+        Query(connection, query)
+          .then((results) => {
+            console.log("Query successful:", results)
+              return res.status(200).json({
+                  results
+              })
+          })
+          .catch((error) => {
+            console.log(error.message, error);
+  
+            return res.status(500).json({
+              message: error.message,
+              error,
+            });
+          });
+      })
+      .catch((error) => {
+        console.log(error.message, error);
+  
+        return res.status(500).json({
+          message: error.message,
+          error,
+        });
+      });
+  };
+  
+
+  const searchProducts_byPrice = (req: Request, res: Response, next: NextFunction) => {
+    console.log("Getting products within a price range...");
+
+    const { minPrice, maxPrice } = req.query;
+  
+    let query = `SELECT * FROM Products WHERE price BETWEEN ${minPrice} AND ${maxPrice} `;
+    
+  
+    Connect()
+      .then((connection) => {
+        console.log("Connection successful")
+        Query(connection, query)
+          .then((results) => {
+            console.log("Query successful:", results)
+              return res.status(200).json({
+                  results
+              })
+          })
+          .catch((error) => {
+            console.log(error.message, error);
+  
+            return res.status(500).json({
+              message: error.message,
+              error,
+            });
+          });
+      })
+      .catch((error) => {
+        console.log(error.message, error);
+  
+        return res.status(500).json({
+          message: error.message,
+          error,
+        });
+      });
+  };
+  
 
 
-export default { getProducts, createProduct };
+
+
+
+export default { getProducts, createProduct, searchProducts_byPrice };
